@@ -1,7 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+
 function _init()
+
+game_state="play"
+
 -- player attributes
 px=60
 py=120
@@ -9,11 +13,11 @@ pspd=2
 
 --bullet attributes
 bullets={}
-end
+
 --invader attributes
 invaders = {}
 inv_dir = 1
-inv_speed = 0.3
+inv_speed = 0.1
 
 for y=0,3 do
  for x=0,7 do
@@ -22,10 +26,29 @@ for y=0,3 do
    y=10+y*10,
    alive=true
   })
- end
+	 end
+	end
 end
 
 function _update()
+
+--game state logic update
+if game_state != "play" then
+		return
+	end
+
+--win condition
+if #invaders == 0 then
+	game_state = "win"
+end
+
+--lose condition 
+for i in all(invaders) do 
+	if i.y > 120 then
+		game_state = "lose"
+		end
+end
+
 --move player
 	if btn(⬅️) then
 	px-=pspd
@@ -44,6 +67,18 @@ function _update()
 		del(bullets,b)
 		end
 	end
+	
+	-- bullet collisions
+	for b in all(bullets) do
+		for i in all(invaders) do
+			if abs(b.x-i.x)<5 and abs(b.y-i.y)<5 then
+				del(bullets,b)
+				del(invaders,i)
+				break
+				end
+			end
+	end
+	
 	-- move invaders
 	local edge = false
 
@@ -66,6 +101,21 @@ end
 function _draw()
 cls()
 
+--different game screens
+if game_state == "play" then
+	draw_game()
+	
+elseif game_state == "win" then
+	print("you saved the day",50,50,11)
+	print("press r to restart")
+elseif game_state =="lose" then
+	print("game over",44,60,8)
+	print("print r to restart")
+end
+end
+
+-- drawing gameplay
+function draw_game()
 --draw player
  spr(1,px,py)
 --bullets
@@ -77,6 +127,8 @@ cls()
 	spr(2,i.x,i.y)
 	end			
 end
+
+
 __gfx__
 00000000000000000033330000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000003300003300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
