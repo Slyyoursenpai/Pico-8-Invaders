@@ -17,7 +17,7 @@ bullets={}
 --invader attributes
 invaders = {}
 inv_dir = 1
-inv_speed = 0.37
+inv_speed = 0.1
 
 for y=0,3 do
  for x=0,7 do
@@ -81,7 +81,6 @@ end
 			if abs(b.x-i.x)<5 and abs(b.y-i.y)<5 then
 				del(bullets,b)
 				del(invaders,i)
-				score+=1
 				break
 				end
 			end
