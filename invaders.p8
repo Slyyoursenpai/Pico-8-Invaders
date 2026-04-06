@@ -9,11 +9,11 @@ pspd=2
 
 --bullet attributes
 bullets={}
-end
+
 --invader attributes
 invaders = {}
 inv_dir = 1
-inv_speed = 0.3
+inv_speed = 0.1
 
 for y=0,3 do
  for x=0,7 do
@@ -22,7 +22,8 @@ for y=0,3 do
    y=10+y*10,
    alive=true
   })
- end
+	 end
+	end
 end
 
 function _update()
@@ -44,6 +45,18 @@ function _update()
 		del(bullets,b)
 		end
 	end
+	
+	-- bullet collisions
+	for b in all(bullets) do
+		for i in all(invaders) do
+			if abs(b.x-i.x)<5 and abs(b.y-i.y)<5 then
+				del(bullets,b)
+				del(invaders,i)
+				break
+				end
+			end
+	end
+	
 	-- move invaders
 	local edge = false
 
