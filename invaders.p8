@@ -1,7 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+
 function _init()
+score = 0
+game_state="play"
+
 -- player attributes
 px=60
 py=120
@@ -27,6 +31,31 @@ for y=0,3 do
 end
 
 function _update()
+
+--game reset
+if game_state != "play" then
+	if btnp(❎) then
+	_init()
+	end
+	return
+	end
+--game state logic update
+if game_state != "play" then
+		return
+	end
+
+--win condition
+if #invaders == 0 then
+	game_state = "win"
+end
+
+--lose condition 
+for i in all(invaders) do 
+	if i.y > 120 then
+		game_state = "lose"
+		end
+end
+
 --move player
 	if btn(⬅️) then
 	px-=pspd
@@ -79,6 +108,23 @@ end
 function _draw()
 cls()
 
+--different game screens
+if game_state == "play" then
+	draw_game()
+	
+elseif game_state == "win" then
+	print("you saved the day",30,50,11)
+	print("your score: "..score, 30, 65, 7)
+	print("press ❎ to restart")
+elseif game_state =="lose" then
+	print("game over",30,60,8)
+	print("your score: "..score, 30, 67, 7)
+	print("print ❎ to restart")
+end
+end
+
+-- drawing gameplay
+function draw_game()
 --draw player
  spr(1,px,py)
 --bullets
@@ -88,6 +134,8 @@ cls()
 --invaders
 	for i in all(invaders) do
 	spr(2,i.x,i.y)
+--score
+	print("score: "..score, 2, 2, 7)	
 	end			
 end
 __gfx__
