@@ -30,7 +30,7 @@ function update_invaders()
 	elseif remaining <=half then
 	inv_speed = 0.5
 	else
-	inv_speed = 0.1
+	inv_speed = 0.25
 	end
 	
 -- movement

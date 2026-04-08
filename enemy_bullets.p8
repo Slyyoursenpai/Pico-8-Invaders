@@ -2,16 +2,43 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 enemy_bullets={}
+
+--bottom invader locator helper function
+	function get_bottom_invaders()
+		local bottoms={}
+		
+		for i  in all(invaders)do
+			local col=flr(i.x/12)
+			
+			if bottoms[col]==nil or i.y>bottoms[col].y then
+				bottoms[col]=i
+				end
+		end
+		return bottoms
+
+	end
+
 --- enemy shoot logic
 function enemy_shoot()
 	--random enemy shoots
-	if rnd(1)<0.01 then
-		local shooter = invaders[flr(rnd(#invaders))+1]
-		
-	if shooter then
-		add(enemy_bullets,{x=shooter.x,y=shooter.y})
-	end
-	end
+ if rnd(1) < 0.02 then
+  local bottoms = get_bottom_invaders()
+
+  -- convert table to list
+  local shooters = {}
+  for b in pairs(bottoms) do
+   add(shooters, bottoms[b])
+  end
+
+  if #shooters > 0 then
+   local shooter = shooters[flr(rnd(#shooters))+1]
+
+   add(enemy_bullets,{
+    x=shooter.x,
+    y=shooter.y
+   })
+  end
+ end
 	end
 	
 --update bullet
@@ -36,6 +63,7 @@ end
 
 --check collision with player bullet
 --to do
+
 -- draw enemy bullets
 function draw_enemy_bullets()
 		for b in all(enemy_bullets) do
