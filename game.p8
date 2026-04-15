@@ -3,10 +3,11 @@ version 41
 __lua__
 function init_game() -- starts game
 -- starts with menu screen
+	popups={}
  game_state = "menu"
  score = 0
 
-	level=1
+	level=0
 	shoot_chance = 0.01
 
  inv_dir = 1 --invader att.
@@ -31,13 +32,14 @@ end
 function start_game()
  score = 0 --resets all
  
- level = 1
+ level = 0
  shoot_chance = 0.01
  inv_speed = 0.3
  
  bullets = {}
  invaders = {}
  enemy_bullets = {}
+	popups={}
 
 
  px = 60
@@ -60,6 +62,7 @@ function update_game()
  update_enemy_bullets()
  
  check_collisions()
+ update_popups()
  check_enemy_hits()
  
  check_game_state()
@@ -92,6 +95,8 @@ function next_level()
  bullets = {}
  invaders = {}
  enemy_bullets = {}
+	popups={}
+
 
  spawn_invaders()
  initial_invader_count = #invaders
@@ -119,6 +124,17 @@ function update_end()
 		start_game()
 		end
 		end	
+end
+---score popup update
+function update_popups()
+ for p in all(popups) do
+  p.y -= 0.5     -- float upward
+  p.t -= 1       -- countdown
+  
+  if p.t <= 0 then
+   del(popups, p)
+  end
+ end
 end
 __gfx__
 00000000000000000000000000333300000333300033330003333000003333000000000000000000000000000000000000000000000000000000000000000000

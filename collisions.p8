@@ -8,7 +8,13 @@ function check_collisions()
    if abs(b.x-i.x)<5 and abs(b.y-i.y)<5 then
     del(bullets,b) 
     del(invaders,i)--both deleted when collision is true
-    score += 1
+   	add(popups, {
+				 x = i.x,
+				 y = i.y,
+				 text = "+"..(1+level),
+				 t = 30
+					})
+    score += 1+level
     break -- stops checking after a hit
    end
   end

@@ -37,9 +37,11 @@ function draw_game()
  draw_bullets()
  draw_invaders()
  draw_enemy_bullets()
+ draw_popups()
 
  -- score (your placement)
  print("score: "..score, 2, 2, 7)
+	print("level: "..level+1, 2, 10, 6)
 end
 
 -- win / lose ------------------
@@ -50,7 +52,7 @@ end
 --end
 function draw_level_clear()
  cls()
- print("level "..level.." cleared!", 25, 50, 11)
+ print("level "..level+1 .." cleared!", 25, 50, 11)
  print("❎ next level", 35, 70, 7)
  print("🅾️ menu", 40, 85, 7)
 end
@@ -60,6 +62,12 @@ function draw_lose()
  print("game over",30,60,8)
  print("your score: "..score, 30, 67, 7)
  print("press ❎ to restart")
+end
+
+function draw_popups()
+ for p in all(popups) do
+  print(p.text, p.x + rnd(2)-1, p.y, 10)
+ end
 end
 __gfx__
 00000000000000000000000000333300000333300033330003333000003333000000000000000000000000000000000000000000000000000000000000000000
