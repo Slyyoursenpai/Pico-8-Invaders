@@ -53,6 +53,8 @@ function update_invaders()
    i.y += 6
   end
  end
+ 
+play_invader_move_sound(inv_speed) 
 end
 
 --- invader draw

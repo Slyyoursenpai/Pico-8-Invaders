@@ -13,6 +13,7 @@ function update_player()
 --bullets pressed once per hit/miss
  if btnp(❎) and #bullets == 0 then
   add(bullets,{x=px,y=py-4}) -- bullet object created
+  play_player_shoot()
  end
 end
 

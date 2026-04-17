@@ -37,6 +37,7 @@ function enemy_shoot()
     x=shooter.x,
     y=shooter.y
    })
+  play_enemy_shoot()
   end
  end
 	end
