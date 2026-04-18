@@ -12,6 +12,7 @@ function spawn_invaders()
    })
   end
  end
+ initial_invader_count=#invaders
 end
 
 --updates invader when hitting wall
@@ -20,8 +21,9 @@ function update_invaders()
 	local remaining = #invaders
 	local half = initial_invader_count/2
 	local quarter = initial_invader_count/4
-	local base_speed = 0.25+(level*0.05)
-	
+	local base_speed = 0.3+(level*0.12)
+inv_speed = base_speed + ((initial_invader_count - remaining) * 0.01)	
+
 	--speed scaling with level
 	if remaining == 1 then
 		inv_speed = base_speed*4

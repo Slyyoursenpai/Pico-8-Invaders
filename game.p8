@@ -26,7 +26,6 @@ function init_game() -- starts game
 --- empty list for bullet and invader objects
  bullets = {}
  invaders = {}
-
 -- function to create invader from invader.p8
 -- spawn_invaders()--may remove
 end
@@ -47,7 +46,6 @@ function start_game()
  enemy_bullets = {}
 	popups={}
 
-
  px = 60
  py = 120
 
@@ -56,7 +54,7 @@ function start_game()
 
 -- game state changed to play
  game_state = "play"
-end
+	end
 
 --calls game systems
 function update_game()
@@ -76,10 +74,10 @@ end
 
 -- comstamtly checks game state
 function check_game_state()
- if #invaders == 0 then
+ if #invaders == 0 then 
   game_state = "level_clear" --win condition
  end
-
+ 
  for i in all(invaders) do
   if i.y > 115 then
    game_state = "lose" -- lose condition
@@ -91,9 +89,7 @@ end
 ---- difficulty scale
 function increase_difficulty()
  level += 1
- 
- inv_speed += 0.5
- shoot_chance = min(shoot_chance + 0.005, 0.25)
+ shoot_chance = min(shoot_chance + 0.0035, 0.15)
 end
 
 ---level next
@@ -103,14 +99,11 @@ function next_level()
  enemy_bullets = {}
 	popups={}
 
-
  spawn_invaders()
  initial_invader_count = #invaders
 
  game_state = "play"
 end
-
-
 ------ game update
 --reset game logic
 function update_end()
@@ -136,7 +129,7 @@ function update_popups()
  for p in all(popups) do
   p.y -= 0.5     -- float upward
   p.t -= 1       -- countdown
-  
+
   if p.t <= 0 then
    del(popups, p)
   end

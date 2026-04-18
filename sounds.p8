@@ -2,7 +2,6 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 -- sounds.p8
-
 move_sfx_timer = 0
 move_toggle = false
 
@@ -13,14 +12,12 @@ move_sfx_timer += 1
 local remaining = #invaders
 local delay = max(5, remaining * 1.5)
 if move_sfx_timer >= delay then
- move_sfx_timer = 0
- 
+ move_sfx_timer = 0 
  if move_toggle then
   sfx(3)
  else
   sfx(4)
- end
- 
+ end 
  move_toggle = not move_toggle
 end
 end
@@ -28,11 +25,9 @@ end
 function play_player_shoot()
 	sfx(5)
 end
-
 function play_enemy_shoot()
 	sfx(6)
 end
-
 function play_enemy_destroy()
  sfx(7)
 end

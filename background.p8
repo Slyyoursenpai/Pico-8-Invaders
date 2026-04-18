@@ -7,48 +7,123 @@ stars_far={}
 stars_mid={}
 stars_near={} -- for parallax
 
+--earth = {
+--	x=56,
+--	y=100
+--}
+
 function init_stars()
- for i=1,50 do
-  add(stars, {
+
+-- far stars (more, slower)
+ for i=1,40 do
+  add(stars_far,{
+   x = rnd(128),
+   y = rnd(128)
+  })
+ end
+-- mid stars
+ for i=1,30 do
+  add(stars_mid,{
+   x = rnd(128),
+   y = rnd(128)
+  })
+ end
+-- near stars (fewer, faster)
+ for i=1,25 do
+  add(stars_near,{
    x = rnd(128),
    y = rnd(128)
   })
  end
 end
 
+--function init_earth()
+-- earth.x = 56
+-- earth.y = 100
+--end
+
+--function update_earth()
+-- earth.x += 0.01
+--end
+
 function update_stars()
- for s in all(stars) do
-  s.y += 0.08
+-- far (slowest)
+ for s in all(stars_far) do
+  s.y += 0.05 + rnd(0.01)
+  if s.y > 128 then
+   s.y = -1
+   s.x = rnd(128)
+  end
+ end
+-- mid
+ for s in all(stars_mid) do
+  s.y += 0.1 + rnd(0.02)
+  if s.y > 128 then
+   s.y = -1
+   s.x = rnd(128)
+  end
+ end
+-- near (fastest)
+ for s in all(stars_near) do
+  s.y += 0.2 + rnd(0.03)
   if s.y > 128 then
    s.y = -1
    s.x = rnd(128)
   end
  end
 end
-
-function draw_stars()
- for s in all(stars) do
-  pset(s.x, s.y, 7)
+----------------
+function draw_earth()
+ spr(21, 95, 102, 4, 4)
+end
+----------------
+----drawing stars of 3 depths
+function draw_stars_far()
+ for s in all(stars_far) do
+  pset(s.x, flr(s.y), 5)
  end
 end
 
-function draw_earth()
--- spr(0, 100, 100) -- position (center-bottom)
+function draw_stars_mid()
+ for s in all(stars_mid) do
+  pset(s.x, flr(s.y), 6)
+ end
+end
+
+function draw_stars_near()
+ for s in all(stars_near) do
+  pset(s.x, flr(s.y), 7)
+ end
+end
+------------draw moon
+function draw_moon()
+spr(25, 111, 95, 3, 2)
+end
+------------------------
+--------- wrapper draw functions
+
+function draw_stars()
+ draw_stars_far()
+ draw_stars_mid()
+ draw_stars_near()
 end
 --------- wrapper functions
 function init_background()
  init_stars()
- -- later: init_earth(), init_nebula(), etc.
+-- init_earth()
 end
 
 function update_background()
  update_stars()
- -- later: update_earth()
+-- update_earth()
 end
 
 function draw_background()
- draw_stars()
-	draw_earth()
+ draw_stars_far()
+ draw_moon()
+ draw_earth()       
+ draw_stars_mid()   
+ draw_stars_near()  
 end
 __gfx__
 000000000000000000000000003333000003333000333300033330000033330000b0b00000000000000000000000000000000000000000000000000000000000

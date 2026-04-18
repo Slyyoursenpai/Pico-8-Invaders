@@ -3,31 +3,25 @@ version 41
 __lua__
 -- player logic
 function update_player()
-
  -- default sprite (idle)
  pspr = 17
-
  -- player movement
  if btn(⬅️) then
  -- pspr = 18
   px -= pspd
  end
-
  if btn(➡️) then 
  -- pspr = 19
   px += pspd
  end
-
  -- prevents offscreen
  px = mid(0, px, 120)
-
  -- bullets pressed once per hit/miss
  if btnp(❎) and #bullets == 0 then
   add(bullets, {x=px, y=py-4})
   play_player_shoot()
  end
 end
-
 -- draws player sprite
 function draw_player()
  spr(pspr, px, py)

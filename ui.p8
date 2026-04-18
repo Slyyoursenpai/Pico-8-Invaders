@@ -2,7 +2,6 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 -- menu ------------------------
-
 function update_menu()
  if btnp(❎) then
   start_game()
@@ -15,7 +14,6 @@ end
 
 function draw_menu()
  print("invaders",24,40,7)
-
  -- moving invader (your logic)
  if sp_inv < 7 - sp_speed then
   sp_inv += sp_speed
@@ -25,13 +23,11 @@ function draw_menu()
 
  spr(sp_inv,60,38)
  spr(sp_inv,75,38)
-
  print("press ❎ to start",20,70,7)
  print("press 🅾️ to quit")
 end
 
 -- game draw -------------------
-
 function draw_game()
  draw_player()
  draw_bullets()
@@ -43,7 +39,6 @@ function draw_game()
  print("score: "..score, 2, 2, 7)
 	print("level: "..level+1, 2, 10, 6)
 end
-
 -- win / lose ------------------
 --function draw_win()
 -- print("you saved the day",30,50,11)
@@ -56,7 +51,6 @@ function draw_level_clear()
  print("❎ next level", 35, 70, 7)
  print("🅾️ menu", 40, 85, 7)
 end
-
 
 function draw_lose()
  print("game over",30,60,8)

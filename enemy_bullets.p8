@@ -8,14 +8,12 @@ enemy_bullets={}
 		local bottoms={}
 		
 		for i  in all(invaders)do
-			local col=flr(i.x/12)
-			
+			local col=flr(i.x/12)		
 			if bottoms[col]==nil or i.y>bottoms[col].y then
 				bottoms[col]=i
 				end
 		end
 		return bottoms
-
 	end
 
 --- enemy shoot logic
@@ -29,10 +27,9 @@ function enemy_shoot()
   for b in pairs(bottoms) do
    add(shooters, bottoms[b])
   end
-
+  
   if #shooters > 0 then
    local shooter = shooters[flr(rnd(#shooters))+1]
-
    add(enemy_bullets,{
     x=shooter.x,
     y=shooter.y
@@ -46,8 +43,7 @@ function enemy_shoot()
 function update_enemy_bullets()
 	for b in all(enemy_bullets) do
 --		b.y+=1
-	b.y+=1+(level*0.1) --may use to increase bullet speed
-		
+	b.y+=1+(level*0.1) --may use to increase bullet speed		
 	if b.y>128 then
 		del(enemy_bullets,b)
 		end
@@ -65,7 +61,6 @@ end
 
 --check collision with player bullet
 --to do
-
 -- draw enemy bullets
 function draw_enemy_bullets()
 		for b in all(enemy_bullets) do
